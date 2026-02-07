@@ -22,6 +22,7 @@ This demo registers the following tools with the browser's Model Context Provide
 | `travel_file_claim` | Files a claim on an active policy. | `policy_id`, `reason` |
 | `travel_check_claim_status` | Checks the status of a specific claim. | `claim_id` |
 
+
 ## Project Structure
 
 - `index.html`: Main application structure.
