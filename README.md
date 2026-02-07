@@ -22,6 +22,29 @@ This demo registers the following tools with the browser's Model Context Provide
 | `travel_file_claim` | Files a claim on an active policy. | `policy_id`, `reason` |
 | `travel_check_claim_status` | Checks the status of a specific claim. | `claim_id` |
 
+## Sample Prompts to Test
+
+You can use these prompts with a WebMCP-enabled agent to test the tools:
+
+### 1. Planning a Trip
+> "I'm planning a ski trip to the Swiss Alps for 10 days. I'm 28 years old. Can you give me a quote?"
+*(Should trigger `travel_get_quote` with destination='europe', activities=['Skiing'])*
+
+### 2. Filtering Options
+> "Show me only the plans that are Visa Compliant for my trip."
+*(Should trigger `travel_list_plans` with visa_compliant=true)*
+
+### 3. Purchasing a Policy
+> "I'd like to buy the Digital Nomad plan from that quote."
+*(Should trigger `travel_purchase_policy` with the correct ID)*
+
+### 4. Filing a Claim
+> "I need to file a claim. I lost my luggage at the airport yesterday."
+*(Should trigger `travel_file_claim` with the active policy ID)*
+
+### 5. Combined Flow (Quote + Filter + Purchase)
+> "I'm 28 years old planning a 10-day ski trip to the Swiss Alps. Please get me a quote, then filter for Visa Compliant plans, and finally purchase the Digital Nomad plan."
+*(Should trigger multiple tools in sequence: `travel_get_quote` -> `travel_list_plans` -> `travel_purchase_policy`)*
 
 ## Project Structure
 
