@@ -257,10 +257,34 @@ async function registerTools() {
                 required: ['destination', 'days', 'age']
             },
             execute: async ({ destination, days, age, activities = [] }) => {
+                // Sync UI Inputs
+                const destSelect = document.getElementById('destination');
+                const daysInput = document.getElementById('days');
+                const ageInput = document.getElementById('age');
+
+                // Match destination options (case-insensitive)
+                const options = Array.from(destSelect.options);
+                const match = options.find(o => o.value.toLowerCase() === destination.toLowerCase());
+                if (match) destSelect.value = match.value;
+
+                if (days) daysInput.value = days;
+                if (age) ageInput.value = age;
+
+                // Sync Activities Checkboxes
+                const checkboxes = document.querySelectorAll('input[name="activities"]');
+                checkboxes.forEach(cb => {
+                    cb.checked = activities.some(a => a.toLowerCase() === cb.value.toLowerCase());
+                });
+
                 const quote = calculateQuote(destination, days, age, activities);
                 state.currentQuote = quote;
+
                 // Update UI context
                 renderPlans(quote);
+
+                // Scroll to results so user sees the change
+                document.getElementById('plans-container').scrollIntoView({ behavior: 'smooth' });
+
                 return JSON.stringify(quote);
             }
         });
@@ -290,6 +314,10 @@ async function registerTools() {
                 });
 
                 renderPlans(state.currentQuote);
+
+                // Scroll to plans to show results
+                document.getElementById('plans-container').scrollIntoView({ behavior: 'smooth' });
+
                 return JSON.stringify(filtered);
             }
         });
@@ -314,6 +342,10 @@ async function registerTools() {
                 if (!plan) throw new Error("Plan not found.");
 
                 window.purchasePolicy(quote_id, plan_id);
+
+                // Switch to dashboard view
+                document.getElementById('nav-dashboard').click();
+
                 return `Successfully purchased ${plan.name}. Policy ID: ${state.policies[state.policies.length-1].id}`;
             }
         });
@@ -339,6 +371,7 @@ async function registerTools() {
 
                 // Auto-switch to dashboard to show claim
                 document.getElementById('nav-dashboard').click();
+                renderClaims(); // Ensure list is refreshed
 
                 return JSON.stringify(claim);
             }
@@ -358,6 +391,22 @@ async function registerTools() {
             execute: async ({ claim_id }) => {
                 const claim = state.claims.get(claim_id);
                 if (!claim) throw new Error("Claim not found.");
+
+                // Switch to dashboard and highlight claim
+                document.getElementById('nav-dashboard').click();
+                renderClaims();
+
+                // Find the claim element and highlight it (simple scroll for now, could add class)
+                // We need to wait for renderClaims to finish if it was async (it's sync here)
+                const claimElements = Array.from(document.querySelectorAll('#claims-list .policy-item'));
+                const targetEl = claimElements.find(el => el.textContent.includes(claim_id));
+
+                if (targetEl) {
+                    targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    targetEl.style.border = '2px solid var(--primary)';
+                    setTimeout(() => targetEl.style.border = '', 3000);
+                }
+
                 return claim.status;
             }
         });
