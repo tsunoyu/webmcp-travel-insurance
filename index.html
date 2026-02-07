@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaGuard Travel Insurance</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="brand">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16 2L2 9L16 30L30 9L16 2Z" fill="#06B6D4"/>
+                    <path d="M16 2L2 9V16C2 22.5 8.5 28.5 16 30C23.5 28.5 30 22.5 30 16V9L16 2ZM14 22L8 16L10.5 13.5L14 17L21.5 9.5L24 12L14 22Z" fill="white"/>
+                </svg>
+                <span>AquaGuard</span>
+            </div>
+            <nav>
+                <button id="nav-home" class="active">Get a Quote</button>
+                <button id="nav-dashboard">My Dashboard</button>
+            </nav>
+        </div>
+    </header>
+
+    <main id="main-view">
+        <section class="hero">
+            <div class="container">
+                <h1>Travel Fearlessly.</h1>
+                <p>Comprehensive coverage for the modern explorer. From skiing in the Alps to scuba diving in the Pacific.</p>
+            </div>
+        </section>
+
+        <section class="quote-engine container">
+            <div class="card quote-form">
+                <h2>Get Your Quote</h2>
+                <form id="quote-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="destination">Destination</label>
+                            <select id="destination" required>
+                                <option value="" disabled selected>Select Region</option>
+                                <option value="europe">Europe</option>
+                                <option value="asia">Asia</option>
+                                <option value="americas">Americas</option>
+                                <option value="worldwide">Worldwide</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="days">Trip Duration (Days)</label>
+                            <input type="number" id="days" min="1" max="365" value="7" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="age">Traveler Age</label>
+                            <input type="number" id="age" min="0" max="110" value="30" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Activities (Select all that apply)</label>
+                        <div class="activities-grid">
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="activities" value="Skiing">
+                                <span>⛷️ Skiing</span>
+                            </label>
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="activities" value="Scuba">
+                                <span>🤿 Scuba</span>
+                            </label>
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="activities" value="Business">
+                                <span>💼 Business</span>
+                            </label>
+                            <label class="checkbox-card">
+                                <input type="checkbox" name="activities" value="Trekking">
+                                <span>🥾 Trekking</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="quote-actions">
+                        <button type="submit" class="btn btn-primary">Calculate Quote</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section class="container filters-section">
+            <div class="filters">
+                <label class="toggle">
+                    <input type="checkbox" id="filter-visa">
+                    <span class="slider"></span>
+                    <span class="label-text">Visa Compliant (Min $30k)</span>
+                </label>
+                <label class="toggle">
+                    <input type="checkbox" id="filter-deductible">
+                    <span class="slider"></span>
+                    <span class="label-text">Zero Deductible</span>
+                </label>
+            </div>
+        </section>
+
+        <section class="container plans-grid" id="plans-container">
+            <!-- Plans will be injected here -->
+        </section>
+    </main>
+
+    <main id="dashboard-view" class="hidden">
+        <div class="container">
+            <h2>My Policies</h2>
+            <div id="policies-list" class="policies-grid">
+                <!-- Policies will be injected here -->
+                <div class="empty-state">No active policies found.</div>
+            </div>
+
+            <h2 class="mt-large">File a Claim</h2>
+            <div class="card claim-form">
+                <form id="claim-form">
+                    <div class="form-group">
+                        <label for="claim-policy">Select Policy</label>
+                        <select id="claim-policy" required>
+                            <option value="" disabled selected>Choose a policy...</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="claim-reason">Feature of Claim</label>
+                        <textarea id="claim-reason" rows="3" placeholder="Describe what happened..." required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-warning">Submit Claim</button>
+                </form>
+            </div>
+
+            <h2 class="mt-large">Claim History</h2>
+            <div id="claims-list" class="claims-list">
+                <!-- Claims will be injected here -->
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 AquaGuard Travel Insurance. All rights reserved.</p>
+            <p class="disclaimer">This is a demo application. No actual insurance is provided.</p>
+        </div>
+    </footer>
+
+    <div id="toast-container"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>
